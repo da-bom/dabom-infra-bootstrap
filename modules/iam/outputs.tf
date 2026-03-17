@@ -9,7 +9,7 @@ output "ecs_task_role_arns" {
     api-core           = aws_iam_role.ecs_task_api_core.arn
     processor-usage    = aws_iam_role.ecs_task_processor_usage.arn
     api-notification   = aws_iam_role.ecs_task_api_notification.arn
-    batch              = aws_iam_role.ecs_task_batch.arn
+    batch-core         = aws_iam_role.ecs_task_batch_core.arn
   }
 }
 

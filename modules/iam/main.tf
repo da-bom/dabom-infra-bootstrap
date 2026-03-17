@@ -129,18 +129,18 @@ resource "aws_iam_role_policy" "ecs_task_api_notification_ssm" {
   policy = local.ssm_inline_policy
 }
 
-resource "aws_iam_role" "ecs_task_batch" {
-  name               = "${var.project}-ecs-task-role-batch"
+resource "aws_iam_role" "ecs_task_batch_core" {
+  name               = "${var.project}-ecs-task-role-batch-core"
   assume_role_policy = local.ecs_trust_policy
 
   tags = {
-    Name = "${var.project}-ecs-task-role-batch"
+    Name = "${var.project}-ecs-task-role-batch-core"
   }
 }
 
-resource "aws_iam_role_policy" "ecs_task_batch_ssm" {
-  name   = "${var.project}-ecs-task-batch-ssm"
-  role   = aws_iam_role.ecs_task_batch.id
+resource "aws_iam_role_policy" "ecs_task_batch_core_ssm" {
+  name   = "${var.project}-ecs-task-batch-core-ssm"
+  role   = aws_iam_role.ecs_task_batch_core.id
   policy = local.ssm_inline_policy
 }
 
@@ -245,7 +245,7 @@ resource "aws_iam_role_policy" "github_actions_ecr_deploy" {
           aws_iam_role.ecs_task_api_core.arn,
           aws_iam_role.ecs_task_processor_usage.arn,
           aws_iam_role.ecs_task_api_notification.arn,
-          aws_iam_role.ecs_task_batch.arn
+          aws_iam_role.ecs_task_batch_core.arn
         ]
       }
     ]
