@@ -28,7 +28,7 @@ resource "aws_ecr_lifecycle_policy" "this" {
     rules = [
       {
         rulePriority = 1
-        description  = "태그 없는 이미지 3일 후 삭제"
+        description  = "Expire untagged images after 3 days"
         selection = {
           tagStatus   = "untagged"
           countType   = "sinceImagePushed"
@@ -41,7 +41,7 @@ resource "aws_ecr_lifecycle_policy" "this" {
       },
       {
         rulePriority = 2
-        description  = "태그된 이미지 최대 5개 유지"
+        description  = "Keep only 5 most recent tagged images"
         selection = {
           tagStatus     = "tagged"
           tagPrefixList = ["v"]

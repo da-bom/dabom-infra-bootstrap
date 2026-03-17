@@ -4,7 +4,7 @@
 # ALB 보안 그룹: 인터넷에서 HTTP/HTTPS 트래픽 수신
 resource "aws_security_group" "alb" {
   name        = "${var.project}-alb-sg"
-  description = "ALB: 인터넷에서 HTTP/HTTPS 인바운드 허용"
+  description = "ALB - Allow HTTP/HTTPS inbound from internet"
   vpc_id      = var.vpc_id
 
   ingress {
@@ -39,7 +39,7 @@ resource "aws_security_group" "alb" {
 # ECS 보안 그룹: ALB에서 오는 트래픽만 허용
 resource "aws_security_group" "ecs" {
   name        = "${var.project}-ecs-sg"
-  description = "ECS 태스크: ALB에서 오는 모든 트래픽 허용"
+  description = "ECS tasks - Allow all traffic from ALB"
   vpc_id      = var.vpc_id
 
   ingress {
@@ -66,7 +66,7 @@ resource "aws_security_group" "ecs" {
 # RDS 보안 그룹: ECS 태스크와 관리자 IP에서만 MySQL 접근 허용
 resource "aws_security_group" "rds" {
   name        = "${var.project}-rds-sg"
-  description = "RDS MySQL: ECS 태스크 및 관리자 IP에서만 3306 허용"
+  description = "RDS MySQL - Allow 3306 from ECS tasks and admin IPs"
   vpc_id      = var.vpc_id
 
   ingress {
@@ -101,7 +101,7 @@ resource "aws_security_group" "rds" {
 # Redis 보안 그룹: ECS 태스크와 관리자 IP에서만 Redis 접근 허용
 resource "aws_security_group" "redis" {
   name        = "${var.project}-redis-sg"
-  description = "Redis: ECS 태스크 및 관리자 IP에서만 6379 허용"
+  description = "Redis - Allow 6379 from ECS tasks and admin IPs"
   vpc_id      = var.vpc_id
 
   ingress {
@@ -137,7 +137,7 @@ resource "aws_security_group" "redis" {
 # 9092: PLAINTEXT, 9094: TLS
 resource "aws_security_group" "msk" {
   name        = "${var.project}-msk-sg"
-  description = "MSK Kafka: ECS 태스크에서만 9092(PLAINTEXT)/9094(TLS) 허용"
+  description = "MSK Kafka - Allow 9092/9094 from ECS tasks"
   vpc_id      = var.vpc_id
 
   ingress {
@@ -174,7 +174,7 @@ resource "aws_security_group" "msk" {
 # ECS 태스크: OTLP 텔레메트리 데이터 전송(4317/4318)
 resource "aws_security_group" "monitor" {
   name        = "${var.project}-monitor-sg"
-  description = "모니터링 서버: Grafana, OTLP Collector, Alloy UI, SSH"
+  description = "Monitor - Grafana, OTLP Collector, Alloy UI, SSH"
   vpc_id      = var.vpc_id
 
   ingress {
