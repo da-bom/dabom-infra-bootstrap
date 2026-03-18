@@ -16,7 +16,7 @@ locals {
     ]
   })
 
-  # 서비스별 태스크 롤: SSM Parameter Store에서 설정값을 읽을 수 있는 권한만 부여
+  # 서비스별 태스크 롤: SSM Parameter Store 읽기 + ECS Exec 권한
   ssm_inline_policy = jsonencode({
     Version = "2012-10-17"
     Statement = [
@@ -28,6 +28,17 @@ locals {
           "ssm:GetParametersByPath"
         ]
         Resource = "arn:aws:ssm:*:*:parameter/${var.project}/*"
+      },
+      {
+        Sid    = "ECSExec"
+        Effect = "Allow"
+        Action = [
+          "ssmmessages:CreateControlChannel",
+          "ssmmessages:CreateDataChannel",
+          "ssmmessages:OpenControlChannel",
+          "ssmmessages:OpenDataChannel"
+        ]
+        Resource = "*"
       }
     ]
   })
