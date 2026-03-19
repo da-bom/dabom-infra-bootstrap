@@ -156,6 +156,22 @@ resource "aws_security_group" "msk" {
     security_groups = [aws_security_group.ecs.id]
   }
 
+  ingress {
+    description     = "Kafka PLAINTEXT from Monitor"
+    from_port       = 9092
+    to_port         = 9092
+    protocol        = "tcp"
+    security_groups = [aws_security_group.monitor.id]
+  }
+
+  ingress {
+    description     = "Kafka TLS from Monitor"
+    from_port       = 9094
+    to_port         = 9094
+    protocol        = "tcp"
+    security_groups = [aws_security_group.monitor.id]
+  }
+
   egress {
     description = "Allow all outbound"
     from_port   = 0
